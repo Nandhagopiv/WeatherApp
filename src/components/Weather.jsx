@@ -18,7 +18,7 @@ function Weather() {
         let weatherRep = axios(`https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=0efe0b956e513b1217ad609add553e0e`)
         weatherRep.then((data) => {
             setCity(data.data.name)
-            setTemp(`${data.data.main.temp} Kelvin`)
+            setTemp(`${Math.floor(data.data.main.temp - 273.15)}° Celsius`)
             setClimate(data.data.weather[0].main)
 
             const sunriseTimestamp = data.data.sys.sunrise
@@ -35,6 +35,26 @@ function Weather() {
 
             const sunriseTime = unixTimestampToDateTime(sunriseTimestamp)
             const sunsetTime = unixTimestampToDateTime(sunsetTimestamp)
+
+            let windDirec;
+
+            if (data.data.wind.deg <= 20 && data.data.wind.deg >= 340) {
+                windDirec = 'Towards North'
+            } else if (data.data.wind.deg >= 20 && data.data.wind.deg <= 70) {
+                windDirec = 'Towards North-East'
+            } else if (data.data.wind.deg >= 70 && data.data.wind.deg <= 110) {
+                windDirec = 'Towards East'
+            } else if (data.data.wind.deg >= 110 && data.data.wind.deg <= 160) {
+                windDirec = 'Towards South-East'
+            } else if (data.data.wind.deg >= 160 && data.data.wind.deg <= 200) {
+                windDirec = 'Towards South'
+            } else if (data.data.wind.deg >= 200 && data.data.wind.deg <= 250) {
+                windDirec = 'Towards South-West'
+            } else if (data.data.wind.deg >= 250 && data.data.wind.deg <= 290) {
+                windDirec = 'Towards West'
+            } else if (data.data.wind.deg >= 290 && data.data.wind.deg <= 340) {
+                windDirec = 'Towards North-West'
+            }
             
             setTitleArr([
                 {
@@ -49,27 +69,27 @@ function Weather() {
                 },
                 {
                     title: "Visibility",
-                    val: `${data.data.visibility} Metre`,
+                    val: `${(data.data.visibility)/1000} KM`,
                     color: "#1A2130"
                 },
                 {
                     title: "Wind Speed",
-                    val: `${data.data.wind.speed} MPS`,
+                    val: `${(((data.data.wind.speed)/1000)*(60*60)).toFixed(2)} KMPH`,
                     color: "#3ABEF9"
                 },
                 {
                     title: "Wind Direction",
-                    val: `${data.data.wind.deg} degrees`,
+                    val: windDirec,
                     color: "#FF9EAA"
                 },
                 {
                     title: "Temperature Maximum",
-                    val: `${data.data.main.temp_max} Kelvin`,
+                    val: `${(data.data.main.temp_max - 273.15).toFixed(2)}° Celsius`,
                     color: "#EE4E4E"
                 },
                 {
                     title: "Temperature Minimum",
-                    val: `${data.data.main.temp_min} Kelvin`,
+                    val: `${(data.data.main.temp_min - 273.15).toFixed(2)}° Celsius`,
                     color: "#2C4E80"
                 },
                 {
@@ -104,7 +124,7 @@ function Weather() {
                 <h1 className="text-3xl font-bold text-center text-[#32012F]">Check Weather in your City?</h1>
                 <div>
                     <input value={userInput} onChange={handleChange} className="p-2 rounded-md rounded-r-none text-white outline-none font-bold bg-slate-900" placeholder="Enter your City" type="text"></input>
-                    <button onClick={check} className="p-2 rounded-md rounded-l-none bg-white font-bold">Check</button>
+                    <button onClick={check} className="p-2 rounded-md rounded-l-none text-white bg-[#C80036] font-bold">Check</button>
                 </div>
                 <p className="text-4xl font-bold text-[#952323]">{city}</p>
                 <p className="text-2xl font-semibold text-[#3E3232]">{temp}</p>
