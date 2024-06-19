@@ -8,54 +8,7 @@ function Weather() {
     const [temp, setTemp] = useState('')
     const [climate, setClimate] = useState('')
 
-    const [titleArr, setTitleArr] = useState([
-        {
-            title: "Humidity",
-            val: '---',
-            color: "#C80036"
-        },
-        {
-            title: "Pressure",
-            val: "---",
-            color: "#FF6969"
-        },
-        {
-            title: "Visibility",
-            val: "---",
-            color: "#1A2130"
-        },
-        {
-            title: "Wind Speed",
-            val: "---",
-            color: "#3ABEF9"
-        },
-        {
-            title: "Wind Direction",
-            val: "---",
-            color: "#FF9EAA"
-        },
-        {
-            title: "Temperature Maximum",
-            val: "---",
-            color: "#EE4E4E"
-        },
-        {
-            title: "Temperature Minimum",
-            val: "---",
-            color: "#2C4E80"
-        },
-        {
-            title: "Longitude",
-            val: "---",
-            color: "#79155B"
-        },
-        {
-            title: "Latitude",
-            val: "---",
-            color: "#0C356A"
-        }
-
-    ])
+    const [titleArr, setTitleArr] = useState([])
 
     function handleChange(e) {
         setUserInput(e.target.value)
@@ -82,9 +35,7 @@ function Weather() {
 
             const sunriseTime = unixTimestampToDateTime(sunriseTimestamp)
             const sunsetTime = unixTimestampToDateTime(sunsetTimestamp)
-
-            console.log(`Sunrise time: ${sunriseTime}`)
-            console.log(`Sunset time: ${sunsetTime}`)
+            
             setTitleArr([
                 {
                     title: "Humidity",
@@ -161,8 +112,8 @@ function Weather() {
             </div>
             <div className="flex justify-between flex-wrap gap-2 m-10 text-center">
                 {
-                    titleArr.map((data) => {
-                        return <div style={{ backgroundColor: `${data.color}` }} className=" p-5 flex-grow rounded-md">
+                    titleArr.map((data, index) => {
+                        return <div key={index} style={{ backgroundColor: `${data.color}` }} className=" p-5 flex-grow rounded-md">
                             <p className="text-2xl font-bold  text-white ">{data.title}</p>
                             <p className="text-xl font-bold mt-2 text-white">{data.val}</p>
                         </div>
