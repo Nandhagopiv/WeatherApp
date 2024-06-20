@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react";
+import mapCover from '../Assets/Images/mapBtnCover.png'
 
 function Weather() {
 
@@ -7,6 +8,8 @@ function Weather() {
     const [city, setCity] = useState('')
     const [temp, setTemp] = useState('')
     const [climate, setClimate] = useState('')
+    const[location,setLocation] = useState('')
+    const[view,setView] = useState(false)
 
     const [titleArr, setTitleArr] = useState([])
 
@@ -20,6 +23,12 @@ function Weather() {
             setCity(data.data.name)
             setTemp(`${Math.floor(data.data.main.temp - 273.15)}° Celsius`)
             setClimate(data.data.weather[0].main)
+            setLocation(`${data.data.coord.lat},${data.data.coord.lon}`)
+            setView(true)
+
+            if (data.data.weather[0].main === "Rain") {
+                
+            }
 
             const sunriseTimestamp = data.data.sys.sunrise
             const sunsetTimestamp = data.data.sys.sunset
@@ -126,11 +135,13 @@ function Weather() {
                     <input value={userInput} onChange={handleChange} className="p-2 rounded-md rounded-r-none text-white outline-none font-bold bg-slate-900" placeholder="Enter your City" type="text"></input>
                     <button onClick={check} className="p-2 rounded-md rounded-l-none text-white bg-[#C80036] font-bold">Check</button>
                 </div>
+                
                 <p className="text-4xl font-bold text-[#952323]">{city}</p>
                 <p className="text-2xl font-semibold text-[#3E3232]">{temp}</p>
                 <p className="text-4xl font-extrabold text-[#071952]">{climate} </p>
+                <a className="text-md font-extrabold bg-green-900 text-white p-3 rounded-md" style={{ backgroundImage: `url(${mapCover})`,backgroundSize:'cover', display: view?'block':'none'}} href={`https://www.google.com/maps/place/${location}`}>View Location</a>
             </div>
-            <div className="flex justify-between flex-wrap gap-2 m-10 text-center">
+            <div className="flex z-20 justify-between flex-wrap gap-2 m-10 text-center">
                 {
                     titleArr.map((data, index) => {
                         return <div key={index} style={{ backgroundColor: `${data.color}` }} className=" p-5 flex-grow rounded-md">
@@ -141,7 +152,7 @@ function Weather() {
                 }
 
             </div>
-        </>
+        </> 
 
     )
 }
