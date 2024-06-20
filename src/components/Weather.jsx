@@ -130,7 +130,7 @@ function Weather() {
     return (
         <>
             <div className="flex flex-col gap-5 items-center p-10">
-                <h1 className="text-3xl font-bold text-center text-[#32012F]">Check Weather in your City?</h1>
+                <h1 className="text-3xl font-bold text-center text-white">Check Weather in your City?</h1>
                 <div>
                     <input value={userInput} onChange={handleChange} className="p-2 rounded-md rounded-r-none text-white outline-none font-bold bg-slate-900" placeholder="Enter your City" type="text"></input>
                     <button onClick={check} className="p-2 rounded-md rounded-l-none text-white bg-[#C80036] font-bold">Check</button>
@@ -139,7 +139,7 @@ function Weather() {
                 <p className="text-4xl font-bold text-[#952323]">{city}</p>
                 <p className="text-2xl font-semibold text-[#3E3232]">{temp}</p>
                 <p className="text-4xl font-extrabold text-[#071952]">{climate} </p>
-                <a className="text-md font-extrabold bg-green-900 text-white p-3 rounded-md" style={{ backgroundImage: `url(${mapCover})`,backgroundSize:'cover', display: view?'block':'none'}} href={`https://www.google.com/maps/place/${location}`}>View Location</a>
+                <a className="text-md font-extrabold bg-green-950 text-white p-3 rounded-md" style={{ backgroundImage: `url(${mapCover})`,backgroundSize:'cover', display: view?'block':'none'}} href={`https://www.google.com/maps/place/${location}`}>View Location</a>
             </div>
             <div className="flex z-20 justify-between flex-wrap gap-2 m-10 text-center">
                 {
